@@ -89,6 +89,9 @@ read :: Read a => String -> a
 -- (If-without-else) Takes bool condition and performs given monadic if bool succeeds
 when :: Monad m => Bool -> m () -> m()
 
+-- Extract the value from a Maybe Monad
+fromJust :: Maybe a -> a
+
 -- ### MISC ###
 
 -- Returns unicode value of character
