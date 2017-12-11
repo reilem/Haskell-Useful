@@ -4,6 +4,29 @@
 -- Replicate any `a` an int number of times.
 replicate :: int -> a -> [a]
 
+-- Apply binary operator to starting element and list, reduces left to right
+foldl :: (b -> a -> b) -> b -> [a] -> b
+-- Apply binary operator to starting element and list, reduces right to left
+foldr :: (a -> b -> b) -> b -> [a] -> b
+
+-- Maps a list to another list given a mapping
+map :: (a -> b) -> [a] -> [b]
+
+-- Filters a list
+filter :: (a -> Bool) -> [a] -> [a]
+
+-- Concats two lists
+(++) :: [a] -> [a] -> [a]
+
+-- Concats n lists
+concat :: [[a]] -> a
+
+-- Other (operations that go without saying)
+head :: [a] -> a
+tail :: [a] -> [a]
+last :: [a] -> [a]
+reverse :: [a] -> [a]
+
 
 -- ### STRING SPECIFICS ###
 
@@ -19,6 +42,11 @@ lines :: String -> [String]
 -- Joins lines with newline
 unlines :: [String] -> String
 
+
+-- ### FUNCTION SPECIFIC ###
+
+-- Function composition
+(.) :: (b -> c) -> (a -> b) -> a -> c
 
 -- ### TUPLE SPECIFICS ###
 
@@ -60,3 +88,13 @@ read :: Read a => String -> a
 
 -- (If-without-else) Takes bool condition and performs given monadic if bool succeeds
 when :: Monad m => Bool -> m () -> m()
+
+-- ### MISC ###
+
+-- Returns unicode value of character
+ord :: Char -> Int
+-- Returns character of unicode value
+chr :: Int -> Char
+
+-- b will be executed before being as paramter for a
+($) :: (a -> b) -> a -> b
