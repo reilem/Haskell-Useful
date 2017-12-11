@@ -75,6 +75,38 @@ instance Show Bool where
   show False = "False"
 ```
 
+### Functor Class ###
+
+Purpose of a functor is to take a wrapped value and transform the type.
+Ex. transforming a Maybe Int to a Maybe Float can be
+done by using the fmap function.
+```haskell
+class Functor f where
+  fmap :: (a -> b) -> f a -> f b
+```
+Instance examples:
+```haskell
+instance Functor Maybe where
+  fmap _ Nothing       = Nothing
+  fmap f (Just a)      = Just (f a)
+```
+
+### Applicative Class ###
+
+Functor class:
+```haskell
+class Applicative f where
+  pure :: a -> f a
+  (<*>) :: f (a -> b) -> f a -> f b
+```
+Instance examples:
+```haskell
+instance Applicative Maybe where
+  pure = Just  
+  Nothing <*> _ = Nothing  
+  (Just f) <*> a = fmap f a
+```
+
 ### Monad Class ###
 
 Monad class.
@@ -95,34 +127,4 @@ instance Monad Maybe where
 instance Monad IO where
   return :: a -> IO a
   (>>=) :: IO a -> (a -> IO b) -> IO b
-```
-
-## Functor Class ###
-
-Functor class:
-```haskell
-class Functor f where
-  fmap :: (a -> b) -> f a -> f b
-```
-Instance examples:
-```haskell
-instance Functor Maybe where
-  fmap _ Nothing       = Nothing
-  fmap f (Just a)      = Just (f a)
-```
-
-## Applicative Class ###
-
-Functor class:
-```haskell
-class Applicative f where
-  pure :: a -> f a
-  (<*>) :: f (a -> b) -> f a -> f b
-```
-Instance examples:
-```haskell
-instance Applicative Maybe where
-  pure = Just  
-  Nothing <*> _ = Nothing  
-  (Just f) <*> a = fmap f a
 ```
