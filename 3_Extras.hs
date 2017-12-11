@@ -44,33 +44,26 @@ bincoeff n k = (pascal!!n)!!k
 -- ## MAY FAIL ##
 
 data MayFail e a = Error e | Result a
-  deriving Show
+  deriving (Eq, Show, Ord)
 
 safeDiv :: Int -> Int -> MayFail String Int
 safeDiv a b
   | b == 0    = Error "Division by zero"
   | otherwise = Result (div a b)
 
-instance Functor MayFail e a where
+instance Functor (MayFail e) where
+  fmap f (Error e) = (Error e)
+  fmap f (Result a) = Result (f a)
 
+instance Applicative (MayFail e) where
+  pure = Result
+  (Error e) <*> _   = Error e
+  (Result f) <*> a  = fmap f a
 
+instance Monad (MayFail e) where
+  return v           = (Result v)
+  (Error e)  >>= _   = (Error e)
+  (Result x) >>= f   = f x
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.
+data Exp = Lit Int | Add Exp Exp | Mul Exp Exp | Div Exp Exp
+  deriving (Eq, Ord, Show)
