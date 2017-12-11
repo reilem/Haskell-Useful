@@ -77,9 +77,8 @@ instance Show Bool where
 
 ### Functor Class ###
 
-Purpose of a functor is to take a wrapped value and transform the type.
-Ex. transforming a Maybe Int to a Maybe Float can be
-done by using the fmap function.
+Functors:
+`fmap`: Allow a regular function to be applied to a wrapped value, and return a new wrapped value.
 ```haskell
 class Functor f where
   fmap :: (a -> b) -> f a -> f b
@@ -93,7 +92,10 @@ instance Functor Maybe where
 
 ### Applicative Class ###
 
-Functor class:
+Applicates:
+`<*>`: Allows wrapped functions to be applied to wrapped
+values, and return a new wrapped value.
+`pure`:
 ```haskell
 class Applicative f where
   pure :: a -> f a
@@ -109,9 +111,9 @@ instance Applicative Maybe where
 
 ### Monad Class ###
 
-Monad class.
-  return: wraps a given value and returns.
-  bind (>>=): takes a wrapped value and function and returns outcome as wrapped value.
+Monads:
+`>>=`: Allows a wrapped value to be applied to a function that takes a
+regular value and return a wrapped value.
 ```haskell
 class Monad m where
   return :: a -> m a
