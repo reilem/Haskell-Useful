@@ -1,7 +1,7 @@
 
 -- ### LIST SPECIFICS ###
 
--- Replicate any `a` an int number of times.
+-- Replicate any `a` an int number of times
 replicate :: int -> a -> [a]
 
 -- Apply binary operator to starting element and list, reduces left to right
@@ -21,11 +21,32 @@ filter :: (a -> Bool) -> [a] -> [a]
 -- Concats n lists
 concat :: [[a]] -> a
 
+-- Zips two list into a list of corresponding pairs
+zip :: [a] -> [b] -> [(a,b)]
+
+-- Zips two list into one according to given function
+zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+
 -- Other (operations that go without saying)
 head :: [a] -> a
 tail :: [a] -> [a]
 last :: [a] -> [a]
 reverse :: [a] -> [a]
+
+-- Gets element in a list at certain index
+(!!) :: [a] -> Int -> a
+
+-- Returns prefix of length of given int
+take :: Int -> [a] -> [a]
+
+-- Return suffix of length of given int
+drop :: Int -> [a] -> [a]
+
+-- Find minimum in list
+minimum :: Ord a => [a] -> a
+
+-- Finds the index for the sought after element
+elemIndex::Eq a => a -> [a] -> Maybe Int
 
 
 -- ### STRING SPECIFICS ###
@@ -43,10 +64,11 @@ lines :: String -> [String]
 unlines :: [String] -> String
 
 
--- ### FUNCTION SPECIFIC ###
+-- ### FUNCTION SPECIFICS ###
 
 -- Function composition
 (.) :: (b -> c) -> (a -> b) -> a -> c
+
 
 -- ### TUPLE SPECIFICS ###
 
@@ -92,6 +114,7 @@ when :: Monad m => Bool -> m () -> m()
 -- Extract the value from a Maybe Monad
 fromJust :: Maybe a -> a
 
+
 -- ### MISC ###
 
 -- Returns unicode value of character
@@ -99,5 +122,5 @@ ord :: Char -> Int
 -- Returns character of unicode value
 chr :: Int -> Char
 
--- b will be executed before being as paramter for a
+-- b will be evaluated before being used as paramter for a
 ($) :: (a -> b) -> a -> b
