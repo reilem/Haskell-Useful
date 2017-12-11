@@ -2,9 +2,11 @@
 
 UsefulFunctions.hs contains functions seen/used in class. Useful for exam.
 
-### Syntax Aid ###
+## Syntax Aid ##
 
-#### Data Types: ####
+### Data Types: ###
+
+#### Keyword: type ####
 
 Create an alias for a certain type to save typing time.
 ```haskell
@@ -14,6 +16,8 @@ Ex.
 ```haskell
 type State = [(String, [Int])]
 ```
+
+#### Keyword: data ####
 
 Create a new data type.
 ```haskell
