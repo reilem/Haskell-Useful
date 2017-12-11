@@ -96,3 +96,17 @@ instance Monad IO where
   return :: a -> IO a
   (>>=) :: IO a -> (a -> IO b) -> IO b
 ```
+
+## Functor Class ###
+
+Functor class:
+```haskell
+class Functor f where
+  fmap :: (a -> b) -> f a -> f b
+```
+Instance examples:
+```haskell
+instance Functor Maybe where
+  fmap _ Nothing       = Nothing
+  fmap f (Just a)      = Just (f a)
+```

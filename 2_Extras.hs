@@ -81,3 +81,40 @@ lc3 f n =
     mList from to =
       if from >= to then [from]
       else from:(mList (from+1) to)
+
+-- HTML
+
+data Attr = Attr String String
+  deriving (Eq, Show)
+
+data HtmlElement = HTMLString String
+  | HtmlTag String [Attr] HtmlStrings
+  deriving (Eq, Show)
+
+
+type HtmlStrings = [HtmlElement]
+
+class HTML a where
+  toHtml :: a -> HtmlElement
+
+data Link = Link String String
+
+instance HTML Link where
+  toHtml (Link s1 s2) = HtmlTag "link" [Attr "target" s1] [HtmlString s2]
+
+unorderedList = HtmlTag "ul" []
+  [
+  HtmlTag "li" [] [HtmlString "Appels"],
+  HtmlTag "li" [] [HtmlString "Bananas"]
+  HtmlTag "li" [] [HtmlString "Oranges"]
+  ]
+
+
+
+
+
+
+
+
+
+.
