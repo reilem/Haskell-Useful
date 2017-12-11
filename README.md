@@ -77,8 +77,7 @@ instance Show Bool where
 
 ### Functor Class ###
 
-Functors:
-`fmap`: Allow a regular function to be applied to a wrapped value, and return a new wrapped value.
+`fmap`: Allow regular functions to be applied to wrapped values, and return new wrapped values.
 ```haskell
 class Functor f where
   fmap :: (a -> b) -> f a -> f b
@@ -92,9 +91,8 @@ instance Functor Maybe where
 
 ### Applicative Class ###
 
-Applicates:
 `<*>`: Allows wrapped functions to be applied to wrapped
-values, and return a new wrapped value.
+values, and return new wrapped values.
 `pure`:
 ```haskell
 class Applicative f where
@@ -112,8 +110,8 @@ instance Applicative Maybe where
 ### Monad Class ###
 
 Monads:
-`>>=`: Allows a wrapped value to be applied to a function that takes a
-regular value and return a wrapped value.
+`>>=`: Allows wrapped values to be applied to functions that takes a
+regular value and return the new wrapped value.
 ```haskell
 class Monad m where
   return :: a -> m a
