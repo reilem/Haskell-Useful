@@ -15,7 +15,7 @@ list4 = [start..]
 
 ### Data Types: ###
 
-#### type ####
+#### Type ####
 
 Create an alias for a certain type to save typing time.
 ```haskell
@@ -26,7 +26,7 @@ Ex.
 type State = [(String, [Int])]
 ```
 
-#### data ####
+#### Data ####
 
 Create a new data type.
 ```haskell
@@ -43,7 +43,7 @@ data Operation = Add Int Int
 
 ### Type Classes: ###
 
-#### class ####
+#### Class ####
 
 Define a class (actually more of an interface), containing a
 number of to be defined functions.
@@ -59,7 +59,7 @@ class Show a where
   show :: a -> String
 ```
 
-### instance ###
+#### Instance ####
 
 Define an instance of a class.
 ```haskell
@@ -109,7 +109,6 @@ instance Applicative Maybe where
 
 ### Monad Class ###
 
-Monads:
 `>>=`: Allows wrapped values to be applied to functions that takes a
 regular value and return the new wrapped value.
 ```haskell
