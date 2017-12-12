@@ -96,8 +96,11 @@ putStrLn :: String -> IO ()
 -- Takes any showable and prints to std. output device, returns void IO
 print :: Show a => a -> IO ()
 
--- Read line from std. input device, returns IO containing string
+-- Reads line from std. input device, returns IO containing string
 getLine :: IO String
+
+-- Reads line from std. input device, returns generic IO type
+readLn :: IO a
 
 -- Takes any showable and converts to String
 show :: Show a => a -> String
@@ -117,6 +120,14 @@ fromJust :: Maybe a -> a
 -- Promotes function application
 ap :: Monad m => m (a -> b) -> m a -> m b
 
+-- Replicates a monad type into a monad of list values
+replicateM :: Monad m => Int -> m a -> m [a]
+
+-- Zips two lists with a given function into a monad of list values
+zipWithM :: Monad m => (a -> b -> m c) -> [a] -> [b] -> m [c]
+
+-- Maps a list with given function into a monad of list values
+mapM :: Monad m => (a -> m b) -> [a] -> m [b]
 
 -- ### MISC ###
 
