@@ -92,7 +92,7 @@ instance Functor Maybe where
 ### Applicative Class ###
 
 `<*>`: Allows wrapped functions to be applied to wrapped
-values, and return new wrapped values.
+values, and return new wrapped values.  
 `pure`: Similar to monad `return`.
 ```haskell
 class Applicative f where
@@ -109,7 +109,7 @@ instance Applicative Maybe where
 
 ### Monad Class ###
 
-`return`: Allows pure values to be put back into a wrapped value state. Useful for when you're working with generic monads.
+`return`: Allows pure values to be put back into a wrapped value state. Useful for when you're working with generic monads.  
 `>>=`: Allows wrapped values to be applied to functions that take
 regular values and return the new wrapped values.
 ```haskell
