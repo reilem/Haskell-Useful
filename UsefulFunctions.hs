@@ -15,7 +15,7 @@ map :: (a -> b) -> [a] -> [b]
 -- Filters a list
 filter :: (a -> Bool) -> [a] -> [a]
 
--- Concats two lists
+-- Concats two lists (also works on strings)
 (++) :: [a] -> [a] -> [a]
 
 -- Concats n lists
@@ -113,6 +113,9 @@ when :: Monad m => Bool -> m () -> m()
 
 -- Extract the value from a Maybe Monad
 fromJust :: Maybe a -> a
+
+-- Promotes function application
+ap :: Monad m => m (a -> b) -> m a -> m b
 
 
 -- ### MISC ###

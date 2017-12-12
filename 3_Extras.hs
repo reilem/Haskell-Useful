@@ -1,3 +1,5 @@
+import Control.Monad
+
 -- ## HAMMING ##
 
 merge :: Ord a => [a] -> [a] -> [a]
@@ -23,7 +25,7 @@ row prev = make 0 prev
   where
     make :: Int -> [Integer] -> [Integer]
     make n prev
-      | n == 0 = (prev !! 0):make 1 prev
+      | n == 0 = head prev:make 1 prev
       | n == l = [prev !! (l-1)]
       | otherwise = (prev !! n)+(prev !! (n-1)):make (n+1) prev
     l :: Int
@@ -52,18 +54,34 @@ safeDiv a b
   | otherwise = Result (div a b)
 
 instance Functor (MayFail e) where
-  fmap f (Error e) = (Error e)
+  fmap f (Error e) = Error e
   fmap f (Result a) = Result (f a)
 
 instance Applicative (MayFail e) where
-  pure = Result
-  (Error e) <*> _   = Error e
-  (Result f) <*> a  = fmap f a
+  pure = return
+  (<*>) = ap
 
 instance Monad (MayFail e) where
-  return v           = (Result v)
-  (Error e)  >>= _   = (Error e)
+  return             = Result
+  (Error e)  >>= _   = Error e
   (Result x) >>= f   = f x
 
 data Exp = Lit Int | Add Exp Exp | Mul Exp Exp | Div Exp Exp
   deriving (Eq, Ord, Show)
+
+eval :: Exp -> MayFail String Int
+
+eval (Lit i)      = Result i
+eval (Div e1 e2)  = eval e1 >>= (\ v1 ->
+                      eval e2 >>= safeDiv v1
+                    )
+eval (Add e1 e2)  = eval e1 >>= (\ v1 ->
+                      eval e2 >>= (\ v2 ->
+                        Result (v1 + v2)
+                      )
+                    )
+eval (Mul e1 e2)   = eval e1 >>= (\ v1 ->
+                      eval e2 >>= (\ v2 ->
+                        Result (v1 * v2)
+                      )
+                    )

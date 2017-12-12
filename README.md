@@ -121,9 +121,9 @@ Instance examples:
 instance Monad Maybe where
   return :: a -> Maybe a
   (>>=) :: Maybe a -> (a -> Maybe b) -> Maybe b
-```
-```haskell
-instance Monad IO where
-  return :: a -> IO a
-  (>>=) :: IO a -> (a -> IO b) -> IO b
+  return = Just
+  m >>= f =
+    case m of
+      Nothing -> Nothing
+      Just x  -> f x
 ```
