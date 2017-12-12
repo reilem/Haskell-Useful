@@ -28,7 +28,32 @@ instance Applicative Writer where
 
 instance Monad Writer where
   return i = Writer i ""
-  Writer a _ >>= f = f a
+  Writer a s >>= f =
+    let Writer b s' = f a in
+      Writer b (s'++s)
 
 trace :: String -> Writer ()
 trace s = Writer () s
+
+evalTraceM :: Exp -> Writer Int
+evalTraceM (Lit i)      = Writer i "Lit\n"
+evalTraceM (Add e1 e2)  = evalTraceM e2 >>= (\ v2 ->
+                            evalTraceM e1 >>= (\ v1 ->
+                              Writer (v1+v2) "Add\n"
+                            )
+                          )
+evalTraceM (Mul e1 e2)  = evalTraceM e2 >>= (\ v2 ->
+                            evalTraceM e1 >>= (\ v1 ->
+                              Writer (v1*v2) "Mul\n"
+                            )
+                          )
+
+-- IMPLEMENTATION MONADIC FUNCTIONS
+
+mySequence :: Monad m => [m a] -> m [a]
+mySequence []     = return []
+mySequence (m:ms) = m >>= (\ v ->
+                            mySequence ms >>= (\ l ->
+                              return (v:l)
+                            )
+                          )
