@@ -48,7 +48,7 @@ evalTraceM (Mul e1 e2)  = evalTraceM e2 >>= (\ v2 ->
                             )
                           )
 
--- IMPLEMENTATION MONADIC FUNCTIONS
+-- ## IMPLEMENTATION MONADIC FUNCTIONS ##
 
 mySequence :: Monad m => [m a] -> m [a]
 mySequence []     = return []
@@ -57,3 +57,79 @@ mySequence (m:ms) = m >>= (\ v ->
                               return (v:l)
                             )
                           )
+
+myMapM :: Monad m => (a -> m b) -> [a] -> m [b]
+myMapM f []     = return []
+myMapM f (x:xs) =
+  let w = f x in
+  w >>= (\ v ->
+          myMapM f xs >>= (\ l ->
+            return (v:l)
+          )
+        )
+
+myZipWithM :: Monad m => (a -> b -> m c) -> [a] -> [b] -> m [c]
+myZipWithM f []     []     = return []
+myZipWithM f (a:as) (b:bs) =
+  let mc = f a b in
+  mc >>=  (\ c ->
+            myZipWithM f as bs >>= (\ l -> return (c:l))
+          )
+
+myReplicateM :: Monad m => Int -> m a -> m [a]
+myReplicateM n x = x >>= (\ v -> return $ replicate n v)
+
+-- ## WRITER AND MYFAIL MONADS ##
+
+data Log e a = LogError e | LogResult a String
+  deriving (Show)
+
+instance Functor (Log e) where
+  fmap f (LogError e)    = LogError e
+  fmap f (LogResult a s) = LogResult (f a) s
+
+instance Applicative (Log e) where
+   pure  = return
+   (<*>) = ap
+
+instance Monad (Log e) where
+  return a              = LogResult a ""
+  (LogError e)    >>= _ = LogError e
+  (LogResult a s) >>= f =
+    case f a of
+      (LogError e')    -> LogError e'
+      (LogResult b s') -> LogResult b (s'++s)
+
+traceLog :: String -> Log e ()
+traceLog s = LogResult () s
+
+safeDivLog :: Int -> Int -> Log String Int
+safeDivLog a b =
+  if b == 0 then
+    LogError "Divide by zero"
+  else
+    LogResult (a `div` b) "Div\n"
+
+data Exp' = Lit' Int
+               | Add' Exp' Exp'
+               | Mul' Exp' Exp'
+               | Div'  Exp' Exp'
+               deriving (Show)
+
+evalLog :: Exp' -> Log String Int
+evalLog (Lit' a)     = LogResult a "Lit\n"
+evalLog (Add' e1 e2) =
+  evalLog e2 >>= (\ v2 ->
+  evalLog e1 >>= (\ v1 ->
+    LogResult (v1+v2) "Add\n"
+  ))
+evalLog (Mul' e1 e2) =
+  evalLog e2 >>= (\ v2 ->
+  evalLog e1 >>= (\ v1 ->
+    LogResult (v1*v2) "Add\n"
+  ))
+evalLog (Div' e1 e2) =
+  evalLog e2 >>= (\ v2 ->
+  evalLog e1 >>= (\ v1 ->
+    safeDivLog v1 v2
+  ))
