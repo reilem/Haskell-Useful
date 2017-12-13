@@ -39,7 +39,7 @@ reverse :: [a] -> [a]
 -- Returns prefix of length of given int
 take :: Int -> [a] -> [a]
 
--- Return suffix of length of given int
+-- Return suffix after given int
 drop :: Int -> [a] -> [a]
 
 -- Find minimum in list
@@ -112,7 +112,7 @@ read :: Read a => String -> a
 -- ### MONAD SPECIFIC ###
 
 -- (If-without-else) Takes bool condition and performs given monadic if bool succeeds
-when :: Monad m => Bool -> m () -> m()
+when :: Monad m => Bool -> m () -> m ()
 
 -- Extract the value from a Maybe Monad
 fromJust :: Maybe a -> a
