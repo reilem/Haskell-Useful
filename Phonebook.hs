@@ -162,10 +162,16 @@ telephones = map callerID [billbook,bobbook,jebbook,valbook]
 data Lookup k = MkLookup (k -> Maybe Entry)
 
 instance Index Lookup where
-  findEntry k (MkLookup f)       = f k
-  empty                         = MkLookup (\ _ -> Nothing)
-  singleton k e                 = MkLookup  (\ k' ->
-                                    | k == k' = Just e
-                                    | otherwise = Nothing
+  findEntry k (MkLookup f)      = f k
+  empty                         = MkLookup (\ _  -> Nothing)
+  singleton k e                 = MkLookup (\ k' ->
+                                    if k == k' then Just e
+                                    else Nothing
                                   )
-  (MkLookup f) <+> (MkLookup g) = MkLookup (f.g)
+  (MkLookup f) <+> (MkLookup g) =
+    MkLookup  (\ k -> case f k of
+                Just a  -> Just a
+                Nothing -> case g k of
+                  Just b -> Just b
+                  Nothing -> Nothing
+              )

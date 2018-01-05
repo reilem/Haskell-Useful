@@ -7,8 +7,8 @@ UsefulFunctions.hs contains functions seen/used in class. Useful for exam.
 ### List Comprehensions: ###
 
 ```haskell
-list1 = [x1 | x1 <- a_list, ...expressions]
-list2 = [(t1,t2,...) | t1 <- list_1, t2 <- list_2, ...expressions]
+list1 = [x1 | x1 <- a_list, ...guards]
+list2 = [(t1,t2,...) | t1 <- list_1, t2 <- list_2, ...guards]
 list3 = [start..end]
 list4 = [start..]
 ```

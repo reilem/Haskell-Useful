@@ -33,6 +33,9 @@ tail :: [a] -> [a]
 last :: [a] -> [a]
 reverse :: [a] -> [a]
 
+-- Determines if list is empty
+null :: [a] -> Bool
+
 -- Gets element in a list at certain index
 (!!) :: [a] -> Int -> a
 
@@ -68,6 +71,12 @@ unlines :: [String] -> String
 
 -- Function composition
 (.) :: (b -> c) -> (a -> b) -> a -> c
+
+-- application operator: b will be evaluated before being used as paramter for a
+($) :: (a -> b) -> a -> b
+
+-- reverse of the application operator
+(&) :: a -> (a -> b) -> b
 
 
 -- ### TUPLE SPECIFICS ###
@@ -108,6 +117,11 @@ show :: Show a => a -> String
 -- Takes String and convert to any readbale value contained in it
 read :: Read a => String -> a
 
+-- Returns unicode value of character
+ord :: Char -> Int
+-- Returns character of unicode value
+chr :: Int -> Char
+
 
 -- ### MONAD SPECIFIC ###
 
@@ -128,13 +142,3 @@ zipWithM :: Monad m => (a -> b -> m c) -> [a] -> [b] -> m [c]
 
 -- Maps a list with given function into a monad of list values
 mapM :: Monad m => (a -> m b) -> [a] -> m [b]
-
--- ### MISC ###
-
--- Returns unicode value of character
-ord :: Char -> Int
--- Returns character of unicode value
-chr :: Int -> Char
-
--- b will be evaluated before being used as paramter for a
-($) :: (a -> b) -> a -> b
