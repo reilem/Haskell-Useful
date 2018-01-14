@@ -49,8 +49,10 @@ drop :: Int -> [a] -> [a]
 minimum :: Ord a => [a] -> a
 
 -- Finds the index for the sought after element
-elemIndex::Eq a => a -> [a] -> Maybe Int
+elemIndex :: Eq a => a -> [a] -> Maybe Int
 
+-- Removes duplicste elements from the list, keeps first occurence
+nub :: Eq a => [a] -> [a]
 
 -- ### STRING SPECIFICS ###
 
