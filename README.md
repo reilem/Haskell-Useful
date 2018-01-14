@@ -121,14 +121,36 @@ Call by reference will sometimes double amount of work needed, call by value is 
 
 Call-by-need = best of both worlds. Will always terminate and won't double the amount of work. When an expression is evaluated the compiler will replace each occurrence of that expression with the same evaluation.
 
-Advantages:
+##### Advantages #####
+__1. Control Abstraction__
 
-##### Infinite Data Structures #####
+  Call by need allows for abstraction of control flow data. Things like a `if-then-else` function would not behave as expected with call-by-value.
+  ```haskell
+  ifthenelse :: Bool -> a -> a -> a
+  ifthenelse True e1 e2 = e1
+  ifthenelse False e1 e2 = e2
+  ```
+__2. Infinite Data Structures__
 
-##### Compositionality #####
+  Thanks to lazy evaluation infinite data structure can be defined.
+  ```haskell
+  from n = n : from (n + 1)
+  ```
+  Each part is evaluated only when it is needed allowing the run time to continuously evaluate and generate new elements.
 
-##### Data Flow Dependancies #####
+  _2.1 Compositionality_
 
+  It is possible to compose infinite structures with other functions such as:
+  ```haskell
+  > take 5 [1..]
+  [1, 2, 3, 4, 5]
+  ```
+  _2.2 Data Flow Dependancies_
+
+  We can write out the natural numbers another way, using the definition of itself to generate new elements.
+  ```haskell
+  nats = 1 : map (+1) nats
+  ```
 
 ## Syntax Aid ##
 
@@ -167,6 +189,12 @@ list3 = [start..]
 ```
 
 ### Anonymous Functions ###
+
+Example:
+```haskell
+stuff = [1,2,3,4,5]
+mapped = map (\ a -> (a * 2) / 9) stuff
+```
 
 ### Data Types: ###
 
