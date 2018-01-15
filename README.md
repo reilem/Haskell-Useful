@@ -74,7 +74,7 @@ If generics are not used then it is called 'Monomorphic'.
 
 #### Currying ####
 
-The concept of Currying is when every function with n parameters is actually simulated by an (n-1)'th order function that takes the first parameter and returns a (n-2)'th order list that processes the remaining characters.
+The concept of Currying is when every function with n parameters is actually simulated by an (n-1)'th order function that takes the first parameter and returns a (n-2)'th order function that processes the remaining characters.
 
 Ex.
 ```haskell

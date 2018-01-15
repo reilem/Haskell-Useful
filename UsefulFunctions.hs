@@ -19,7 +19,7 @@ filter :: (a -> Bool) -> [a] -> [a]
 (++) :: [a] -> [a] -> [a]
 
 -- Concats n lists
-concat :: [[a]] -> a
+concat :: [[a]] -> [a]
 
 -- Zips two list into a list of corresponding pairs
 zip :: [a] -> [b] -> [(a,b)]
